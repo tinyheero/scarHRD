@@ -38,9 +38,9 @@ scar_score<-function(seg,reference = "grch38", chr.in.names=TRUE, m,seqz=FALSE, 
   }
 
   if (seqz==TRUE){
-    cat('Preprocessing started...\n')
+    message('Preprocessing started...\n')
     seg<-preprocess.seqz(seg, ploidy0=ploidy, chr.in.names=chr.in.names)
-    cat('Preprocessing finished \n')
+    message('Preprocessing finished \n')
   } else {
     if tibble::is_tibble(seg) {
       stop("Please convert the tibble to a data.frame before running")
@@ -55,7 +55,7 @@ scar_score<-function(seg,reference = "grch38", chr.in.names=TRUE, m,seqz=FALSE, 
 
   }
   #prep
-  cat('Determining HRD-LOH, LST, TAI \n')
+  message('Determining HRD-LOH, LST, TAI \n')
   seg<-preprocess.hrd(seg)
   #Calculating the hrd score:
   res_hrd <- calc.hrd(seg,sizelimit1=sizelimitLOH)

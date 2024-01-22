@@ -9,7 +9,7 @@ Depends: R (>= 3.5.0)
 License: MIT License
 Encoding: UTF-8
 LazyData: true
-Imports: data.table (>= 1.10)
+Imports: sequenza (>= 2.1.2), data.table (>= 1.10)
 RoxygenNote: 6.0.1
-Suggests: knitr, rmarkdown, sequenza (>= 2.1.2)
+Suggests: knitr, rmarkdown
 VignetteBuilder: knitr

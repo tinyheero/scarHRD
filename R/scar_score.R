@@ -42,6 +42,9 @@ scar_score<-function(seg,reference = "grch38", chr.in.names=TRUE, m,seqz=FALSE, 
     seg<-preprocess.seqz(seg, ploidy0=ploidy, chr.in.names=chr.in.names)
     cat('Preprocessing finished \n')
   } else {
+    if tibble::is_tibble(seg) {
+      stop("Please convert the tibble to a data.frame before running")
+    }
     if (!is.data.frame(seg)) {
       seg <- read.table(seg,header=T, check.names = F, stringsAsFactors = F, sep="\t")
     }

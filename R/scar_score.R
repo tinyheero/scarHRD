@@ -6,11 +6,23 @@
 #' @param seqz Optional parameter, set to TRUE, if input file is a binned sequenza file.
 #' @param ploidy Optional parameter, may be used if the ploidy of the sample is known.
 #' @param chr.in.names Optional parameter, default: TRUE, set to FALSE if input file does not contain 'chr' in chromosome names.
+#' @param write_output Boolean to indicate if the scarHRD scores should be 
+#'   written to disk. 
 #' @return Output is, with the following columns: HRD	Telomeric AI	Mean size	Interstitial AI	Mean Size	Whole chr AI	Telomeric LOH	Mean size	Interstitial LOH	Mean Size	Whole chr LOH	Ploidy	Aberrant cell fraction	LST	HRDscore	adjustedHRDscore
 #' @export
 #' @import sequenza
 #' @import data.table
-scar_score<-function(seg,reference = "grch38", chr.in.names=TRUE, m,seqz=FALSE, ploidy=NULL, sizelimitLOH=15e6, outputdir=NULL){
+scar_score <- function(
+    seg, 
+    reference = "grch38", 
+    chr.in.names=TRUE, 
+    m,
+    seqz=FALSE, 
+    ploidy=NULL, 
+    sizelimitLOH=15e6, 
+    outputdir=NULL, 
+    write_output = TRUE
+  ) {
 
   if (is.null(outputdir)){
   outputdir=getwd()
@@ -76,6 +88,14 @@ scar_score<-function(seg,reference = "grch38", chr.in.names=TRUE, m,seqz=FALSE, 
   HRDresulst<-c(res_hrd,res_ai[1],res_lst,sum_HRD0)
   names(HRDresulst)<-c("HRD",colnames(res_ai)[1],"LST", "HRD-sum")
   run_name<-names(sum_HRD0)
-  write.table(t(HRDresulst),paste0(outputdir,"/",run_name,"_HRDresults.txt"),col.names=NA,sep="\t",row.names=unique(seg[,1]))
+  if (write_output) {
+    write.table(
+      t(HRDresulst),
+      paste0(outputdir,"/",run_name,"_HRDresults.txt"),
+      col.names = NA, 
+      sep = "\t",
+      row.names = unique(seg[,1])
+    )
+  }
   return(t(HRDresulst))
 }
